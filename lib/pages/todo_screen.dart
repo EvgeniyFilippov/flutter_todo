@@ -20,13 +20,39 @@ class _HomeState extends State<Home> {
     todoList.addAll(['Buy milk', 'Wash dishes', 'work']);
   }
 
+  void _menuOpen() {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(title: Text('Menu'),),
+            body: Row(
+              children: [
+                ElevatedButton(onPressed: (){
+                  Navigator.pop(context);
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                }, child: Text('Go to Home'),),
+                Padding(padding: EdgeInsets.only(left: 15)),
+                Text("Simple word")
+              ],
+            ),
+          );
+        })
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Colors.orangeAccent,
         title: Text('To Do List'), titleTextStyle: TextStyle(color: Colors.white),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: _menuOpen,
+              icon: Icon(Icons.menu)
+          )
+        ],
       ),
       body: ListView.builder(
           itemCount: todoList.length,
@@ -58,7 +84,7 @@ class _HomeState extends State<Home> {
           }
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.green,
         onPressed: () {
           showDialog(context: context, builder: (BuildContext context) {
             return AlertDialog(
